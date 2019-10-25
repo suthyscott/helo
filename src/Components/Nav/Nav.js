@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import './Nav.css'
 
 class Nav extends Component {
     constructor(){
@@ -35,10 +37,13 @@ class Nav extends Component {
     }
     
     render(){
+        console.log(this.props)
         return (
             <div>
                 {this.state.show ? (
                     <div>
+                        <img id='profile-pic' src={this.props.profilePic}/>
+                        <div>{this.props.username}</div>
                         <Link to='/dashboard'><button>Home</button></Link>
                         <Link to='new'><button>New Post</button></Link>
                         <Link to='/'><button>Logout</button></Link>
@@ -52,4 +57,16 @@ class Nav extends Component {
     }
 }
 
-export default withRouter(Nav)
+const mapStateToProps = reduxState => {
+    const {username, profilePic} = reduxState
+    return {
+        username, 
+        profilePic
+    }
+}
+
+// const mapDispatchToProps = {
+//     updateReduxState
+// }
+
+export default connect(mapStateToProps)(withRouter(Nav))

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link } from 'react-router-dom';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {updateReduxState} from '../../ducks/reducer'
 
 class Auth extends Component {
     constructor(){
@@ -12,10 +14,19 @@ class Auth extends Component {
         }
     }
 
+    handleUpdateState = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+        // console.log(this.state)
+    }
+
     handleRegisterUser = () => {
         const {username, password} = this.state
-        axios.post('/auth/register', {username, password})
+        axios.post('/api/auth/register', {username, password})
         .then(res => {
+            const {id, username, profile_pic} = res.data
+            this.props.updateReduxState(id, username, profile_pic)
             this.props.history.push('/dashboard')
         })
         .catch(err => console.log(err))
@@ -23,9 +34,12 @@ class Auth extends Component {
 
     handleGetUser = () => {
         const {username, password} = this.state
-        axios.post('/auth/login', {username, password})
+        axios.post('/api/auth/login', {username, password})
         .then(res => {
+            console.log(res.data)
             this.props.history.push('/dashboard')
+            const {id, username, profile_pic} = res.data
+            this.props.updateReduxState(id, username, profile_pic)
         })
         .catch(err => console.log(err))
     }
@@ -36,16 +50,22 @@ class Auth extends Component {
                 Auth
                 <input 
                 placeholder='Username'
-                name='username' />
+                name='username' 
+                onChange={e => this.handleUpdateState(e)} />
                 <input 
                 placeholder='Password'
-                name='password' />
+                name='password'
+                onChange={e => this.handleUpdateState(e)} />
 
-                <Link to='/dashboard'><button>Login</button></Link>
+                <Link to='/dashboard' onClick={() => this.handleGetUser()}><button>Login</button></Link>
                 <button onClick={() => this.handleRegisterUser()}>Register</button>
             </div>
         )
     }
 }
 
-export default Auth
+const mapDispatchToProps = {
+    updateReduxState
+}
+
+export default connect(null, mapDispatchToProps)(Auth)
