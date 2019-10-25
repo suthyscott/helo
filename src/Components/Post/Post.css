@@ -1,0 +1,10 @@
+.post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#profile-pic {
+    height: 100px;
+    width: 100px
+}

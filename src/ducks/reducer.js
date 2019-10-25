@@ -21,10 +21,10 @@ export function updateReduxState(userId, username, profilePic){
 }
 
 function reducer(state = initialState, action){
-    console.log(action)
+    // console.log(action)
     const {type, payload} = action
     switch(type){
-        
+
         case UPDATE_REDUX_STATE:
                 console.log(payload)
             return{...state,

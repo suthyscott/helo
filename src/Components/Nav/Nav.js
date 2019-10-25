@@ -37,12 +37,12 @@ class Nav extends Component {
     }
     
     render(){
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <div>
                 {this.state.show ? (
                     <div>
-                        <img id='profile-pic' src={this.props.profilePic}/>
+                        <img id='profile-pic' src={this.props.profilePic} alt='Profile' />
                         <div>{this.props.username}</div>
                         <Link to='/dashboard'><button>Home</button></Link>
                         <Link to='new'><button>New Post</button></Link>
