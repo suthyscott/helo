@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Auth extends Component {
     constructor(){
@@ -9,18 +11,38 @@ class Auth extends Component {
             password: ''
         }
     }
+
+    handleRegisterUser = () => {
+        const {username, password} = this.state
+        axios.post('/auth/register', {username, password})
+        .then(res => {
+            this.props.history.push('/dashboard')
+        })
+        .catch(err => console.log(err))
+    }
+
+    handleGetUser = () => {
+        const {username, password} = this.state
+        axios.post('/auth/login', {username, password})
+        .then(res => {
+            this.props.history.push('/dashboard')
+        })
+        .catch(err => console.log(err))
+    }
     
     render(){
         return (
             <div>
                 Auth
                 <input 
-                placeholder='Username' />
+                placeholder='Username'
+                name='username' />
                 <input 
-                placeholder='Password' />
+                placeholder='Password'
+                name='password' />
 
-                <button>Login</button>
-                <button>Register</button>
+                <Link to='/dashboard'><button>Login</button></Link>
+                <button onClick={() => this.handleRegisterUser()}>Register</button>
             </div>
         )
     }
