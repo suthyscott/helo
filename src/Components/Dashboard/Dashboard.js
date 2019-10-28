@@ -16,14 +16,14 @@ class Dashboard extends Component {
         }
     }
 
-    componentDidMount = () => {
-        axios.get(`/api/posts/${this.props.id}?userposts=${this.state.checkbox}&search=${this.state.search}` )
-        .then(res => {
-            this.setState({
-                posts: res.data
-            })
-        })
-    }
+    // componentDidMount = () => {
+    //     axios.get(`/api/posts/${this.props.id}?userposts=${this.state.checkbox}&search=${this.state.search}` )
+    //     .then(res => {
+    //         this.setState({
+    //             posts: res.data
+    //         })
+    //     })
+    // }
 
     handleUpdateSearch = e => {
         // console.log('hit handleUpdateSearch')
@@ -59,16 +59,16 @@ class Dashboard extends Component {
         })
     }
 
-    handleResetSearch = () => {
-        axios.get(`/api/posts/${this.props.id}?userposts=${this.state.checkbox}&search=${this.state.search}` )
-        .then(res => {
+    // handleResetSearch = () => {
+    //     axios.get(`/api/posts/${this.props.id}?userposts=${this.state.checkbox}&search=${this.state.search}` )
+    //     .then(res => {
             
-            this.setState({
-                posts: res.data,
-                search: ''
-            })
-        })
-    }
+    //         this.setState({
+    //             posts: res.data,
+    //             search: ''
+    //         })
+    //     })
+    // }
 
     render(){
         // console.log(this.state.posts)

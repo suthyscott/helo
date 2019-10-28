@@ -23,6 +23,9 @@ class Auth extends Component {
 
     handleRegisterUser = () => {
         const {username, password} = this.state
+        // if(username || password === ''){
+        //     return alert('Must fill out all input fields')
+        // }
         axios.post('/api/auth/register', {username, password})
         .then(res => {
             const {id, username, profile_pic} = res.data
@@ -37,9 +40,9 @@ class Auth extends Component {
         axios.post('/api/auth/login', {username, password})
         .then(res => {
             console.log(res.data)
-            this.props.history.push('/dashboard')
             const {id, username, profile_pic} = res.data
             this.props.updateReduxState(id, username, profile_pic)
+            this.props.history.push('/dashboard')
         })
         .catch(err => console.log(err))
     }
@@ -57,7 +60,7 @@ class Auth extends Component {
                 name='password'
                 onChange={e => this.handleUpdateState(e)} />
 
-                <Link to='/dashboard' onClick={() => this.handleGetUser()}><button>Login</button></Link>
+                <button onClick={() => this.handleGetUser()}>Login</button>
                 <button onClick={() => this.handleRegisterUser()}>Register</button>
             </div>
         )

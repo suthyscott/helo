@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {updateReduxState} from '../../ducks/reducer';
 import './Nav.css'
+import axios from 'axios';
 
 class Nav extends Component {
     constructor(){
@@ -35,9 +37,19 @@ class Nav extends Component {
             })
         }
     }
+
+    handleLogout = () => {
+        console.log('hit handleLogout')
+        console.log(this.props)
+        axios.post('/api/auth/logout').then(res => {
+            this.props.updateReduxState(0, '', '')
+            this.props.history.push('/')
+            console.log(res)
+        })
+        console.log(this.props)
+    }
     
     render(){
-        // console.log(this.props)
         return (
             <div>
                 {this.state.show ? (
@@ -46,7 +58,7 @@ class Nav extends Component {
                         <div>{this.props.username}</div>
                         <Link to='/dashboard'><button>Home</button></Link>
                         <Link to='new'><button>New Post</button></Link>
-                        <Link to='/'><button>Logout</button></Link>
+                        <button onClick={() => this.handleLogout()}>Logout</button>
                     </div>
                 ) : (
                     <div></div>
@@ -69,4 +81,4 @@ const mapStateToProps = reduxState => {
 //     updateReduxState
 // }
 
-export default connect(mapStateToProps)(withRouter(Nav))
+export default connect(mapStateToProps, {updateReduxState})(withRouter(Nav))

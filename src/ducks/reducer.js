@@ -8,8 +8,8 @@ const initialState = {
 const UPDATE_REDUX_STATE = 'UPDATE_REDUX_STATE'
 
 export function updateReduxState(userId, username, profilePic){
-    console.log('hit updateReduxState', initialState)
-    console.log('updateReduxState params', userId, username, profilePic)
+    // console.log('hit updateReduxState', initialState)
+    // console.log('updateReduxState params', userId, username, profilePic)
     return{
         type: UPDATE_REDUX_STATE,
         payload: {

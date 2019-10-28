@@ -2,8 +2,9 @@ require("dotenv").config()
 
 const express = require('express')
 const massive = require('massive')
+const session = require('express-session')
 const app = express()
-const {SERVER_PORT, CONNECTION_STRING} = process.env
+const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env
 
 const ctrl = require('./controller')
 
@@ -17,9 +18,19 @@ massive(CONNECTION_STRING).then(db => {
     console.log('DB connected.')
 })
 
+app.use(session({
+    resave: false, 
+    saveUninitialized: true,
+    secret: SESSION_SECRET,
+    cookie: {
+        maxAge: 1000 * 60 * 60
+    }
+}))
+
 // Authentication
 app.post('/api/auth/register', ctrl.register)
 app.post('/api/auth/login', ctrl.login)
+app.post('/api/auth/logout', ctrl.logout)
 
 app.get('/api/posts/:userid', ctrl.getPosts)
 
